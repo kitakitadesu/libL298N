@@ -1,0 +1,55 @@
+image: python:3.11
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  PLATFORMIO_CACHE_DIR: "$CI_PROJECT_DIR/.cache/platformio"
+
+cache:
+  paths:
+    - .cache/pip
+    - .cache/platformio
+    - .pio
+
+stages:
+  - build
+
+before_script:
+  - python --version
+  - pip install --upgrade pip
+  - pip install --upgrade platformio
+
+# Arduino Uno Example
+build:arduino_uno_basic:
+  stage: build
+  script:
+    - cd examples/arduino_uno_basic
+    - pio run -e uno
+  artifacts:
+    paths:
+      - examples/arduino_uno_basic/.pio/build/uno/firmware.hex
+      - examples/arduino_uno_basic/.pio/build/uno/firmware.elf
+    expire_in: 1 week
+
+# ESP32 Basic Example
+build:esp32_basic:
+  stage: build
+  script:
+    - cd examples/esp32_basic
+    - pio run -e esp32dev
+  artifacts:
+    paths:
+      - examples/esp32_basic/.pio/build/esp32dev/firmware.bin
+      - examples/esp32_basic/.pio/build/esp32dev/firmware.elf
+    expire_in: 1 week
+
+# ESP32 Dual Motor Example
+build:esp32_dual_motor:
+  stage: build
+  script:
+    - cd examples/esp32_dual_motor
+    - pio run -e esp32dev
+  artifacts:
+    paths:
+      - examples/esp32_dual_motor/.pio/build/esp32dev/firmware.bin
+      - examples/esp32_dual_motor/.pio/build/esp32dev/firmware.elf
+    expire_in: 1 week
