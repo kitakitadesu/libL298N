@@ -1,0 +1,27 @@
+{
+  "name": "libL298N",
+  "version": "1.0.0",
+  "description": "L298N Motor Driver Library with braking support for Arduino and ESP32",
+  "keywords": ["motor", "driver", "l298n", "dc-motor", "pwm", "arduino", "esp32"],
+  "authors": [
+    {
+      "name": "kitakitadesu",
+      "maintainer": true
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fibomission/libL298N.git"
+  },
+  "license": "MIT",
+  "frameworks": ["arduino"],
+  "platforms": ["atmelavr", "espressif32"],
+  "examples": [
+    "examples/arduino_uno_basic/src/main.cpp",
+    "examples/esp32_basic/src/main.cpp",
+    "examples/esp32_dual_motor/src/main.cpp"
+  ],
+  "export": {
+    "include": ["src"]
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "author": "Books Horse",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -67.2, "left": -52.76, "attrs": {} },
+    {
+      "type": "chip-scope",
+      "id": "scope1",
+      "top": -114.18,
+      "left": 273.6,
+      "attrs": {
+        "sampleTimeUs": "100",
+        "sampleTimeMs": "40",
+        "triggerChannel": "0",
+        "triggerMode": "1",
+        "crtColor": "0",
+        "trace0Color": "14",
+        "trace1Color": "12",
+        "trace2Color": "10",
+        "trace3Color": "2"
+      }
+    },
+    { "type": "chip-l298n", "id": "driver1", "top": -133.38, "left": 110.4, "attrs": {} },
+    { "type": "chip-l298n", "id": "driver2", "top": 193.02, "left": 120, "attrs": {} },
+    {
+      "type": "chip-scope",
+      "id": "scope2",
+      "top": 212.22,
+      "left": 273.6,
+      "attrs": {
+        "sampleTimeUs": "100",
+        "sampleTimeMs": "40",
+        "triggerChannel": "0",
+        "triggerMode": "1",
+        "crtColor": "0",
+        "trace0Color": "14",
+        "trace1Color": "12",
+        "trace2Color": "10",
+        "trace3Color": "2"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text1",
+      "top": -67.2,
+      "left": 547.2,
+      "attrs": { "text": "OUT1 H=forward" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text2",
+      "top": -38.4,
+      "left": 547.2,
+      "attrs": { "text": "OUT2 H=backward" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text3",
+      "top": -19.2,
+      "left": 547.2,
+      "attrs": { "text": "OUT3 H=forward" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text4",
+      "top": 9.6,
+      "left": 547.2,
+      "attrs": { "text": "OUT4 H=backward" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text5",
+      "top": 249.6,
+      "left": 537.6,
+      "attrs": { "text": "OUT1 H=forward" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text6",
+      "top": 278.4,
+      "left": 537.6,
+      "attrs": { "text": "OUT2 H=backward" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text7",
+      "top": 307.2,
+      "left": 537.6,
+      "attrs": { "text": "OUT3 H=forward" }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "text8",
+      "top": 336,
+      "left": 537.6,
+      "attrs": { "text": "OUT4 H=backward" }
+    },
+    { "type": "wokwi-gnd", "id": "gnd1", "top": 67.2, "left": 181.8, "attrs": {} },
+    { "type": "wokwi-vcc", "id": "vcc1", "top": 0.76, "left": 201.6, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "driver1:OUT1", "scope1:D0", "green", [ "h0" ] ],
+    [ "driver1:OUT2", "scope1:D1", "green", [ "h0" ] ],
+    [ "driver1:OUT3", "scope1:D2", "green", [ "h0" ] ],
+    [ "driver1:OUT4", "scope1:D3", "green", [ "v0" ] ],
+    [ "driver2:OUT1", "scope2:D0", "green", [ "h0" ] ],
+    [ "driver2:OUT2", "scope2:D1", "green", [ "h0" ] ],
+    [ "driver2:OUT3", "scope2:D2", "green", [ "h0" ] ],
+    [ "driver2:OUT4", "scope2:D3", "green", [ "v0" ] ],
+    [ "driver1:EN A", "esp:32", "green", [ "h-192", "v76.8" ] ],
+    [ "driver1:IN1", "esp:33", "green", [ "h-201.6", "v105.6" ] ],
+    [ "driver1:IN2", "esp:25", "green", [ "h-211.2", "v105.6" ] ],
+    [ "driver1:IN3", "esp:26", "green", [ "h-220.8", "v115.2" ] ],
+    [ "driver1:IN4", "esp:27", "green", [ "h-240", "v19.2" ] ],
+    [ "driver1:EN B", "esp:14", "green", [ "h-249.6", "v115.2" ] ],
+    [ "driver2:EN A", "esp:13", "green", [ "h-201.6", "v-105.6", "h9.6" ] ],
+    [ "esp:16", "driver2:IN1", "green", [ "h28.8", "v144" ] ],
+    [ "esp:17", "driver2:IN2", "green", [ "h38.4", "v163.2" ] ],
+    [ "esp:18", "driver2:IN3", "green", [ "h48", "v192" ] ],
+    [ "esp:19", "driver2:IN4", "green", [ "h57.6", "v211.2" ] ],
+    [ "esp:23", "driver2:EN B", "green", [ "h67.2", "v278.4" ] ],
+    [ "driver2:GND", "gnd1:GND", "black", [ "h21.01", "v-134.4" ] ],
+    [ "driver1:GND", "gnd1:GND", "black", [ "h30.61", "v192" ] ],
+    [ "driver2:5V", "vcc1:VCC", "red", [ "h30.61", "v-172.8" ] ],
+    [ "driver1:5V", "vcc1:VCC", "red", [ "h40.21", "v144" ] ],
+    [ "esp:GND.3", "gnd1:GND", "black", [ "h0" ] ],
+    [ "esp:5V", "vcc1:VCC", "red", [ "h-9.45", "v19.2", "h201.6" ] ]
+  ],
+  "dependencies": {
+    "chip-scope": "github:Dlloydev/Wokwi-Chip-scope@1.0.7",
+    "chip-l298n": "github:drf5n/Wokwi-Chip-L298N@1.0.5"
+  }
+}
