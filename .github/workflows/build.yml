@@ -1,0 +1,64 @@
+name: Build Examples
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        example:
+          - name: arduino_uno_basic
+            env: uno
+          - name: esp32_basic
+            env: esp32dev
+          - name: esp32_dual_motor
+            env: esp32dev
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Cache pip
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Cache PlatformIO
+      uses: actions/cache@v4
+      with:
+        path: ~/.platformio
+        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install PlatformIO
+      run: |
+        python -m pip install --upgrade pip
+        pip install --upgrade platformio
+    
+    - name: Build ${{ matrix.example.name }}
+      run: |
+        cd examples/${{ matrix.example.name }}
+        pio run -e ${{ matrix.example.env }}
+    
+    - name: Upload firmware artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: firmware-${{ matrix.example.name }}
+        path: |
+          examples/${{ matrix.example.name }}/.pio/build/**/*.hex
+          examples/${{ matrix.example.name }}/.pio/build/**/*.bin
+          examples/${{ matrix.example.name }}/.pio/build/**/*.elf
+        retention-days: 7
